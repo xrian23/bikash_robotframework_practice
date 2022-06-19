@@ -17,6 +17,7 @@ Library             DateTime
 Library             OperatingSystem
 Library             RPA.Archive
 Library             RPA.Robocorp.Vault
+Library             RPA.Dialogs
 
 Suite Setup         Setup The Environment
 Suite Teardown      Shut Down Browser
@@ -145,8 +146,12 @@ Setup The Environment
     Log    ${OUTPUT_DIR}
     ${secret}=    Get Secret    practice
     LOG    ${secret}[robotsparebinindustries_url]
-    ${url}=    Set Variable    ${secret}[robotsparebinindustries_url]
+    #Set Suite Variable    ${url}    ${secret}[robotsparebinindustries_url]
     Log    ${secret}[order_csv_file]
-    ${order_csv_file}=    Set Variable    ${secret}[order_csv_file]
+    Set Suite Variable    ${order_csv_file}    ${secret}[order_csv_file]
+    Add text input    URL    label=Robot Order Poratl URL
+    ${response}=    Run dialog
+    LOG    ${response}
+    Set Suite Variable    ${URL}    ${response.URL}
 
     #Remove Directory    ${OUTPUT_DIR}    recursive=${True}
